@@ -1,5 +1,5 @@
 # ULTIMA Python Bindings
-This module contains a thin wrapper around the ULTIMA service which allows for
+This module contains a wrapper around the ULTIMA service which allows for
 cross-platform LTI validation.
 
 ## Dependencies
@@ -8,7 +8,7 @@ cross-platform LTI validation.
 ## Usage
 `pip install https://github.com/UQ-eLIPSE/ultimalib-python/archive/v1.0.0.zip`
 
-To track the package in your `requirements.txt` file; simply paste the github archive URL in it like so:
+To track the package in your `requirements.txt` file; just paste the github archive URL in it like so:
 
 ```bash
 cat requirements.txt
@@ -36,7 +36,7 @@ def handle_request(request):
         request contains some LTI payload you just received in your application
     """
 
-    app_key = "some_long_unique_string_unique_to_this_application"
+    app_key = "some_unique_string_unique_to_this_application"
     ultima_service_uri = "https://location_of_ultima_service.net/"
 
     lti_validator = LTIValidator(ultima_service_uri, app_key)
@@ -54,13 +54,13 @@ router.on(LTI_LISTEN_LOCATION, "POST", handle_lti_request)
 ```
 
 ## Architecture
-This module is fairly straightforward, it forwards any LTI request to a secure endpoint which contains a record of the `oauth_consumer_key` and the `secret_key`. This remote endpoint then validates the request, and returns a simple response indicating its validity.
+This module is fairly straightforward, it forwards any LTI request to a secure endpoint which contains a record of the `oauth_consumer_key` and the `secret_key`. This remote endpoint then validates the request, and returns a response indicating its validity.
 
 `LTIValidator`
 A class which handles the plumbing of the LTI validation. It is given a ULTIMA service URI and an `app_key`. The user then only needs to call the `validate_request` method with a forwarded LTI payload to determine the validity of it.
 
 `LTIValidatorException`
-An exception thrown when the server returns a not-good error code about the LTI response. The exception exposes the following data:
+An exception thrown when the server returns an error code about the LTI response. The exception exposes the following data:
 
     * message<string> - The error message the ULTIMA server responded with
     * status_code<int> - The HTTP status code the ULTIMA server responded with
